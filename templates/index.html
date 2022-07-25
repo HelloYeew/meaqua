@@ -18,16 +18,23 @@
 
 <style>
     * {
-        --color-primary: #dfd9d6;
+        --color-primary: #dfd9d6 !important;
         --color-accent: #dbc2d1;
         --color-background:#0a0a0aa6;
-        transition: .3s;
     }
 
     body {
         height: 100vh;
-        background: linear-gradient(0deg, var(--color-background), var(--color-background)), url("{% static 'img/background.png' %}") top!important;
+        background: url("{% static 'img/background.png' %}") top!important;
         background-size: cover!important;
+    }
+
+    #video-background {
+        background-color: #000000;
+    }
+
+    #mask {
+        background: linear-gradient(0deg, var(--color-background), var(--color-background))
     }
 </style>
 
@@ -36,6 +43,7 @@
         <source src="{% static 'video/video.mp4' %}" type="video/mp4">
     </video>
 
+    <div id="mask"></div>
 
     <div class="container main-padding">
         <input type="text" class="meaqua-search-bar">
@@ -52,17 +60,56 @@
             <p id="meaqua-applause">What about you, Takuya-kun? Please do your best to become happy for my sake. I am praying for your happiness from the bottom of my heart.</p id="meaqua-applause">
         </header>
         <h2 class="meaqua-section-headline">Applications</h2>
+        <div class="row">
+            <div class="col-3">
+                <a href="https://github.com" target rel="noreferrer" class="app-card">
+                    <div class="app-card-icon"><i class="mdi mdi-github" aria-hidden="true" style="font-size: 24px; vertical-align: middle"></i></div>
+                    <div class="app-card-detail">
+                        <h5>GitHub</h5>
+                        <span>Oh man</span>
+                    </div>
+                </a>
+            </div>
+        </div>
         <h2 class="meaqua-section-headline">Bookmarks</h2>
+        <div class="row">
+            <div class="col-3 bookmark-card">
+                <h3>Infrastructure</h3>
+                <div class="bookmark-card-bookmark">
+                    <a href="https://www.google.com" target rel="noreferrer">
+                        <div class="bookmark-card-icon"><i class="mdi mdi-github" aria-hidden="true" style="font-size: 20px"></i></div> Google
+                    </a>
+                    <a href="https://www.google.com" target rel="noreferrer">
+                        <div class="bookmark-card-icon"><i class="mdi mdi-github" aria-hidden="true" style="font-size: 20px"></i></div> Google
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#Right bottom button#}
+    <div class="position-absolute bottom-0 end-0" style="margin-bottom: 10px; margin-right: 10px;">
+        <button type="button" id="video-control" class="btn btn-primary"><i class="mdi mdi-pause" aria-hidden="true" style="font-size: 24px"></i></button>
+        <button type="button" id="video-mute" class="btn btn-primary"><i class="mdi mdi-volume-mute" aria-hidden="true" style="font-size: 24px"></i></button>
+    </div>
+
+    {# Left bottom show what's playing #}
+    <div class="position-absolute bottom-0 start-0" style="margin-bottom: 10px; margin-left: 10px;">
+        <p>Now playing : Marine set sail!!</p>
+        <p id="video-time"></p>
     </div>
 </body>
 
 <script>
     let datetime = document.getElementById('meaqua-time');
-    let video = document.getElementById('video-background');
+    let videoBackground = document.getElementById('video-background');
+    let videoControl = document.getElementById('video-control');
+    let videoMute = document.getElementById('video-mute');
+    let videoTime = document.getElementById('video-time');
     const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
     updateTime();
+    updateVideoTime();
 
     // update date and time every second
     setInterval(function() {
@@ -87,5 +134,66 @@
         }
         datetime.innerHTML = days[date.getDay()] + ', ' + date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear() + ' - ' + hour + ':' + minute + ':' + second;
     }
+
+    // if the video is not playing, change the transparency of video to 0 and change the background color to transparent
+    setInterval(function() {
+        if (videoBackground.paused) {
+            document.getElementById('video-background').style.opacity = 0;
+            document.getElementById('video-background').style.backgroundColor = 'transparent';
+        } else {
+            document.getElementById('video-background').style.opacity = 1;
+            document.getElementById('video-background').style.backgroundColor = '#000000';
+        }
+    }, 1000);
+
+    // video control button
+    videoControl.addEventListener('click', function() {
+        if (videoBackground.paused) {
+            videoBackground.play();
+            videoControl.innerHTML = '<i class="mdi mdi-pause" aria-hidden="true" style="font-size: 24px"></i>';
+        } else {
+            videoBackground.pause();
+            videoControl.innerHTML = '<i class="mdi mdi-play" aria-hidden="true" style="font-size: 24px"></i>';
+        }
+    });
+
+    // video mute button
+    videoMute.addEventListener('click', function() {
+        if (videoBackground.muted) {
+            videoBackground.muted = false;
+            videoMute.innerHTML = '<i class="mdi mdi-volume-mute" aria-hidden="true" style="font-size: 24px"></i>';
+        } else {
+            videoBackground.muted = true;
+            videoMute.innerHTML = '<i class="mdi mdi-volume-off" aria-hidden="true" style="font-size: 24px"></i>';
+        }
+    });
+
+    function updateVideoTime() {
+        // format : 00:00 / 00:00
+        let time = videoBackground.currentTime;
+        let duration = videoBackground.duration;
+        let minute = Math.floor(time / 60);
+        let second = Math.floor(time % 60);
+        let durationMinute = Math.floor(duration / 60);
+        let durationSecond = Math.floor(duration % 60);
+        if (minute < 10) {
+            minute = '0' + minute;
+        }
+        if (second < 10) {
+            second = '0' + second;
+        }
+        if (durationMinute < 10) {
+            durationMinute = '0' + durationMinute;
+        }
+        if (durationSecond < 10) {
+            durationSecond = '0' + durationSecond;
+        }
+        videoTime.innerHTML = minute + ':' + second + ' / ' + durationMinute + ':' + durationSecond;
+    }
+
+    // update video time every second
+    setInterval(function() {
+        updateVideoTime();
+    }, 1000);
 </script>
 </html>

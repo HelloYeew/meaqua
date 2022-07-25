@@ -12,6 +12,15 @@ p {
     color: var(--color-primary);
 }
 
+a {
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--color-primary);
+}
+
 .main-padding {
     padding: 4rem !important;
     z-index: 10;
@@ -24,6 +33,17 @@ p {
     position: fixed;
     top: 0;
     left: 0;
+    z-index: -2;
+    transition: .3s;
+}
+
+#mask {
+    object-fit: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     z-index: -1;
 }
 
@@ -67,4 +87,79 @@ p {
     font-size: 20px;
     font-weight: 900;
     color: var(--color-primary);
+}
+
+.app-card {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.app-card:hover {
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.25);
+    transition: all .2s;
+}
+
+.app-card-icon {
+    width: 35px;
+    height: 35px;
+    margin-right: 0.5em;
+}
+
+.app-card-icon i {
+    color: var(--color-primary);
+}
+
+.app-card-detail {
+    text-transform: uppercase;
+}
+
+.app-card-detail h5 {
+    font-size: 1em;
+    font-weight: 500;
+    color: var(--color-primary);
+    margin-bottom: -4px;
+}
+
+.app-card-detail span {
+    color: var(--color-accent);
+    font-weight: 400;
+    font-size: .8em;
+    opacity: 1;
+}
+
+.bookmark-card {
+
+}
+
+.bookmark-card h3 {
+    color: var(--color-accent);
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.bookmark-card-bookmark {
+    display: flex;
+    flex-direction: column;
+}
+
+.bookmark-card-bookmark a {
+    line-height: 2;
+    transition: all .25s;
+    display: flex;
+}
+
+.bookmark-card-icon {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    margin-top: 3px;
+    margin-right: 2px;
+    justify-content: center;
+    align-items: center;
 }
