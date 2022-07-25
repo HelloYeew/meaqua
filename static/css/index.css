@@ -14,6 +14,17 @@ p {
 
 .main-padding {
     padding: 4rem !important;
+    z-index: 10;
+}
+
+#video-background {
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
 .meaqua-search-bar {

@@ -21,18 +21,23 @@
         --color-primary: #dfd9d6;
         --color-accent: #dbc2d1;
         --color-background:#0a0a0aa6;
+        transition: .3s;
     }
 
     body {
         height: 100vh;
         background: linear-gradient(0deg, var(--color-background), var(--color-background)), url("{% static 'img/background.png' %}") top!important;
         background-size: cover!important;
-        transition: .3s;
     }
 </style>
 
-<body class="main-padding">
-    <div class="container">
+<body>
+    <video autoplay loop id="video-background">
+        <source src="{% static 'video/video.mp4' %}" type="video/mp4">
+    </video>
+
+
+    <div class="container main-padding">
         <input type="text" class="meaqua-search-bar">
         <header>
             <p id="meaqua-time"></p>
@@ -53,6 +58,7 @@
 
 <script>
     let datetime = document.getElementById('meaqua-time');
+    let video = document.getElementById('video-background');
     const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
