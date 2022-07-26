@@ -18,29 +18,39 @@
 
 <style>
     * {
+        {% if not user.is_authenticated or use_default_theme %}
         --color-primary: #dfd9d6 !important;
         --color-accent: #dbc2d1;
         --color-background:#0a0a0aa6;
+        {% else %}
+        --color-primary: {{ theme.color_primary }} !important;
+        --color-accent: {{ theme.color_accent }};
+        --color-background: {{ theme.color_background }};
+        {% endif %}
     }
 
     body {
         height: 100vh;
+        {% if not user.is_authenticated or use_default_theme %}
         background: url("{% static 'img/background.png' %}") top!important;
+        {% else %}
+        background: url("{{ theme.background.url }}") top!important;
+        {% endif %}
         background-size: cover!important;
     }
 
     #video-background {
         background-color: #000000;
     }
-
-    #mask {
-        background: linear-gradient(0deg, var(--color-background), var(--color-background))
-    }
 </style>
 
 <body>
     <video autoplay loop id="video-background">
+        {% if not user.is_authenticated or use_default_theme %}
         <source src="{% static 'video/video.mp4' %}" type="video/mp4">
+        {% else %}
+        <source src="{{ theme.video.video.url }}" type="video/mp4">
+        {% endif %}
     </video>
 
     <div id="mask"></div>
@@ -86,18 +96,56 @@
             </div>
         </div>
     </div>
+
     {#Right bottom button#}
     <div class="position-absolute bottom-0 end-0" style="margin-bottom: 10px; margin-right: 10px;">
         <button type="button" id="video-control" class="btn btn-primary"><i class="mdi mdi-pause" aria-hidden="true" style="font-size: 24px"></i></button>
-        <button type="button" id="video-mute" class="btn btn-primary"><i class="mdi mdi-volume-mute" aria-hidden="true" style="font-size: 24px"></i></button>
+        <button type="button" id="video-mute" class="btn btn-primary"><i class="mdi mdi-volume-high" aria-hidden="true" style="font-size: 24px"></i></button>
+        <button type="button" id="settings" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#settings-modal"><i class="mdi mdi-cog" aria-hidden="true" style="font-size: 24px"></i></button>
     </div>
 
     {# Left bottom show what's playing #}
     <div class="position-absolute bottom-0 start-0" style="margin-bottom: 10px; margin-left: 10px;">
-        <p>Now playing : Marine set sail!!</p>
-        <p id="video-time"></p>
+        <div id="video-info">
+            {% if not user.is_authenticated or use_default_theme %}
+            <p>Now playing : loveletter</p>
+            {% else %}
+            <p>Now playing : {{ theme.video.name }}</p>
+            {% endif %}
+            <p id="video-time"></p>
+        </div>
+    </div>
+
+    {# Modal #}
+    <div class="modal fade" id="settings-modal" tabindex="-1" aria-labelledby="settings-header" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" style="background-color: var(--color-background)">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="settings-header" style="color: var(--color-accent)">Settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% if user.is_authenticated %}
+                    <p>Logged in as {{ user.username }}</p>
+                    {% else %}
+                    <p>Not logged in</p>
+                    {% endif %}
+
+                    {% if not user.is_authenticated or use_default_theme %}
+                    <p>Theme : Default</p>
+                    {% else %}
+                    <p>Theme : {{ theme.name }}</p>
+                    {% endif %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
+
+
 
 <script>
     let datetime = document.getElementById('meaqua-time');
@@ -105,6 +153,7 @@
     let videoControl = document.getElementById('video-control');
     let videoMute = document.getElementById('video-mute');
     let videoTime = document.getElementById('video-time');
+    let videoInfo = document.getElementById('video-info');
     const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
@@ -140,9 +189,11 @@
         if (videoBackground.paused) {
             document.getElementById('video-background').style.opacity = 0;
             document.getElementById('video-background').style.backgroundColor = 'transparent';
+            videoInfo.style.display = 'none';
         } else {
             document.getElementById('video-background').style.opacity = 1;
             document.getElementById('video-background').style.backgroundColor = '#000000';
+            videoInfo.style.display = 'block';
         }
     }, 1000);
 
@@ -161,7 +212,7 @@
     videoMute.addEventListener('click', function() {
         if (videoBackground.muted) {
             videoBackground.muted = false;
-            videoMute.innerHTML = '<i class="mdi mdi-volume-mute" aria-hidden="true" style="font-size: 24px"></i>';
+            videoMute.innerHTML = '<i class="mdi mdi-volume-high" aria-hidden="true" style="font-size: 24px"></i>';
         } else {
             videoBackground.muted = true;
             videoMute.innerHTML = '<i class="mdi mdi-volume-off" aria-hidden="true" style="font-size: 24px"></i>';

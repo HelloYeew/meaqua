@@ -45,6 +45,8 @@ a:hover {
     width: 100vw;
     height: 100vh;
     z-index: -1;
+    background: linear-gradient(0deg, var(--color-background), var(--color-background));
+    opacity: 0.75;
 }
 
 .meaqua-search-bar {
@@ -162,4 +164,8 @@ a:hover {
     margin-right: 2px;
     justify-content: center;
     align-items: center;
+}
+
+#video-info {
+    transition: all .3s;
 }
