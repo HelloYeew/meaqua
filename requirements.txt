@@ -2,3 +2,5 @@ Django~=4.0.6
 python-decouple~=3.6
 django-admin-interface~=0.19.1
 django-colorfield~=0.7.2
+django-crispy-forms~=1.14.0
+crispy-bootstrap5~=0.6
