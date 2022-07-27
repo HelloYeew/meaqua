@@ -8,7 +8,7 @@ class Video(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     video = models.FileField(upload_to='videos/', validators=[FileExtensionValidator(allowed_extensions=['mp4', 'webm', 'ogg'])])
-    description = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, blank=True)
 
     def __str__(self):
         return self.name + ' by ' + self.user.username
