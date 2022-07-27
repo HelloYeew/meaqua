@@ -169,3 +169,17 @@ a:hover {
 #video-info {
     transition: all .3s;
 }
+
+/* Our own styling that override bootstrap */
+.btn-meaqua {
+    background-color: var(--color-accent);
+    border: none;
+    transition: all .2s;
+}
+
+.btn-meaqua:hover {
+    background-color: var(--color-accent);
+    filter: brightness(85%);
+    transition: all .2s;
+    box-shadow: 0px 0px 10px var(--color-accent);
+}
