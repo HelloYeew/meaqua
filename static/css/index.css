@@ -46,7 +46,7 @@ a:hover {
     height: 100vh;
     z-index: -1;
     background: linear-gradient(0deg, var(--color-background), var(--color-background));
-    opacity: 0.75;
+    opacity: 0.5;
 }
 
 .meaqua-search-bar {

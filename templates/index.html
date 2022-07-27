@@ -21,7 +21,7 @@
         {% if not user.is_authenticated or use_default_theme %}
         --color-primary: #dfd9d6 !important;
         --color-accent: #dbc2d1;
-        --color-background:#0a0a0aa6;
+        --color-background:#0a0a0a;
         {% else %}
         --color-primary: {{ theme.color_primary }} !important;
         --color-accent: {{ theme.color_accent }};
@@ -46,7 +46,7 @@
 
 <body>
     <video autoplay loop id="video-background">
-        {% if not user.is_authenticated or use_default_theme %}
+        {% if not user.is_authenticated or use_default_theme or theme.video.video.url == none %}
         <source src="{% static 'video/video.mp4' %}" type="video/mp4">
         {% else %}
         <source src="{{ theme.video.video.url }}" type="video/mp4">
@@ -107,7 +107,7 @@
     {# Left bottom show what's playing #}
     <div class="position-absolute bottom-0 start-0" style="margin-bottom: 10px; margin-left: 10px;">
         <div id="video-info">
-            {% if not user.is_authenticated or use_default_theme %}
+            {% if not user.is_authenticated or use_default_theme or theme.video.name == none %}
             <p>Now playing : loveletter</p>
             {% else %}
             <p>Now playing : {{ theme.video.name }}</p>
