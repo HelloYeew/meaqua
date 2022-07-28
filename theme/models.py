@@ -26,3 +26,14 @@ class Theme(models.Model):
 
     def __str__(self):
         return self.name + ' by ' + self.user.username
+
+
+class Application(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, blank=True)
+    url = models.URLField(max_length=255)
+    icon_name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name + ' by ' + self.user.username

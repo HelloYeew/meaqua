@@ -181,5 +181,11 @@ a:hover {
     background-color: var(--color-accent);
     filter: brightness(85%);
     transition: all .2s;
-    box-shadow: 0px 0px 10px var(--color-accent);
+    box-shadow: 0 0 15px var(--color-accent);
+}
+
+.btn-meaqua:focus {
+    outline: none;
+    background-color: var(--color-accent);
+    filter: brightness(85%);
 }

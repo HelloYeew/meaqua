@@ -5,3 +5,4 @@ from .models import *
 
 admin.site.register(Theme)
 admin.site.register(Video)
+admin.site.register(Application)

@@ -69,18 +69,29 @@
             </div>
             <p id="meaqua-applause">What about you, Takuya-kun? Please do your best to become happy for my sake. I am praying for your happiness from the bottom of my heart.</p id="meaqua-applause">
         </header>
+        {% if user.is_authenticated %}
+        {% if applications|length > 0 %}
         <h2 class="meaqua-section-headline">Applications</h2>
         <div class="row">
             <div class="col-3">
-                <a href="https://github.com" target rel="noreferrer" class="app-card">
-                    <div class="app-card-icon"><i class="mdi mdi-github" aria-hidden="true" style="font-size: 24px; vertical-align: middle"></i></div>
+                {% for application in applications %}
+                <a href="{{ application.url }}" target rel="noreferrer" class="app-card">
+                    <div class="app-card-icon"><i class="mdi mdi-{{ application.icon_name }}" aria-hidden="true" style="font-size: 24px; vertical-align: middle"></i></div>
                     <div class="app-card-detail">
-                        <h5>GitHub</h5>
-                        <span>Oh man</span>
+                        <h5>{{ application.name }}</h5>
+                        <span>
+                            {% if application.description == "" or application.description == null %}
+                            {{ application.url }}
+                            {% else %}
+                            {{ application.description }}
+                            {% endif %}
+                        </span>
                     </div>
                 </a>
+                {% endfor %}
             </div>
         </div>
+        {% endif %}
         <h2 class="meaqua-section-headline">Bookmarks</h2>
         <div class="row">
             <div class="col-3 bookmark-card">
@@ -95,13 +106,13 @@
                 </div>
             </div>
         </div>
-    </div>
+        {% endif %}
 
     {#Right bottom button#}
     <div class="position-absolute bottom-0 end-0" style="margin-bottom: 10px; margin-right: 10px;">
-        <button type="button" id="video-control" class="btn btn-primary"><i class="mdi mdi-pause" aria-hidden="true" style="font-size: 24px"></i></button>
-        <button type="button" id="video-mute" class="btn btn-primary"><i class="mdi mdi-volume-high" aria-hidden="true" style="font-size: 24px"></i></button>
-        <button type="button" id="settings" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#settings-modal"><i class="mdi mdi-cog" aria-hidden="true" style="font-size: 24px"></i></button>
+        <button type="button" id="video-control" class="btn btn-meaqua"><i class="mdi mdi-pause" aria-hidden="true" style="font-size: 24px"></i></button>
+        <button type="button" id="video-mute" class="btn btn-meaqua"><i class="mdi mdi-volume-high" aria-hidden="true" style="font-size: 24px"></i></button>
+        <button type="button" id="settings" class="btn btn-meaqua" data-bs-toggle="modal" data-bs-target="#settings-modal"><i class="mdi mdi-cog" aria-hidden="true" style="font-size: 24px"></i></button>
     </div>
 
     {# Left bottom show what's playing #}
@@ -140,7 +151,7 @@
                 <div class="modal-footer">
                     {% if user.is_authenticated %}
                     <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
-                    <a href="#" class="btn btn-primary">Settings</a>
+                    <a href="#" class="btn btn-meaqua">Settings</a>
                     {% else %}
                     <a href="{% url 'login' %}" class="btn btn-success">Login</a>
                     {% endif %}
@@ -157,7 +168,7 @@
             <div class="toast-body">
                 Logged in as {{ user.username }}
                 <div class="mt-2 pt-2 border-top">
-                    <a href="#" class="btn btn-primary btn-sm">Go to settings</a>
+                    <a href="#" class="btn btn-meaqua btn-sm">Go to settings</a>
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Close</button>
                 </div>
             </div>
@@ -168,7 +179,7 @@
             <div class="toast-body">
                 You are not logged in.
                 <div class="mt-2 pt-2 border-top">
-                    <a href="{% url 'login' %}" class="btn btn-primary btn-sm">Login</a>
+                    <a href="{% url 'login' %}" class="btn btn-meaqua btn-sm">Login</a>
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Close</button>
                 </div>
             </div>
@@ -191,11 +202,6 @@
     updateTime();
     updateVideoTime();
 
-    // update date and time every second
-    setInterval(function() {
-        updateTime();
-    }, 1000);
-
     function updateTime() {
         let date = new Date();
         // format : MONDAY, 25 JULY 2022 - 00:11:00
@@ -215,18 +221,21 @@
         datetime.innerHTML = days[date.getDay()] + ', ' + date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear() + ' - ' + hour + ':' + minute + ':' + second;
     }
 
-    // if the video is not playing, change the transparency of video to 0 and change the background color to transparent
-    setInterval(function() {
-        if (videoBackground.paused) {
-            document.getElementById('video-background').style.opacity = 0;
-            document.getElementById('video-background').style.backgroundColor = 'transparent';
-            videoInfo.style.display = 'none';
-        } else {
-            document.getElementById('video-background').style.opacity = 1;
-            document.getElementById('video-background').style.backgroundColor = '#000000';
-            videoInfo.style.display = 'block';
-        }
-    }, 1000);
+    videoBackground.addEventListener('pause', function() {
+        document.getElementById('video-background').style.opacity = 0;
+        document.getElementById('video-background').style.backgroundColor = 'transparent';
+        videoInfo.style.display = 'none';
+    });
+
+    videoBackground.addEventListener('play', function() {
+        document.getElementById('video-background').style.opacity = 1;
+        document.getElementById('video-background').style.backgroundColor = '#000000';
+        videoInfo.style.display = 'block';
+    });
+
+    videoBackground.addEventListener('timeupdate', function() {
+        updateVideoTime();
+    });
 
     // video control button
     videoControl.addEventListener('click', function() {
