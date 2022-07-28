@@ -40,7 +40,7 @@
     }
 
     #video-background {
-        background-color: #000000;
+        background-color: var(--color-background);
     }
 </style>
 
@@ -73,8 +73,8 @@
         {% if applications|length > 0 %}
         <h2 class="meaqua-section-headline">Applications</h2>
         <div class="row">
+            {% for application in applications %}
             <div class="col-3">
-                {% for application in applications %}
                 <a href="{{ application.url }}" target rel="noreferrer" class="app-card">
                     <div class="app-card-icon"><i class="mdi mdi-{{ application.icon_name }}" aria-hidden="true" style="font-size: 24px; vertical-align: middle"></i></div>
                     <div class="app-card-detail">
@@ -88,8 +88,8 @@
                         </span>
                     </div>
                 </a>
-                {% endfor %}
             </div>
+            {% endfor %}
         </div>
         {% endif %}
         <h2 class="meaqua-section-headline">Bookmarks</h2>

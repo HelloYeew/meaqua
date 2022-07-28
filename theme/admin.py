@@ -6,3 +6,5 @@ from .models import *
 admin.site.register(Theme)
 admin.site.register(Video)
 admin.site.register(Application)
+admin.site.register(BookmarkCategory)
+admin.site.register(Bookmark)
