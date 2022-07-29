@@ -156,6 +156,12 @@ a:hover {
     display: flex;
 }
 
+.bookmark-card-bookmark a:hover {
+    transform: translateX(10px);
+    transition: all .25s;
+    text-decoration: underline;
+}
+
 .bookmark-card-icon {
     width: 20px;
     height: 20px;
