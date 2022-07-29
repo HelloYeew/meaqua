@@ -51,6 +51,7 @@ class Bookmark(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     url = models.URLField(max_length=255)
+    icon_name = models.CharField(max_length=255)
     category = models.ForeignKey(BookmarkCategory, on_delete=models.CASCADE)
 
     def __str__(self):
