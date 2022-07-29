@@ -61,13 +61,19 @@
             <p id="meaqua-time"></p>
             <div class="row">
                 <div class="col-11">
-                    <p id="meaqua-welcometext">Good night!</p>
+                    <p id="meaqua-greeting"></p>
                 </div>
                 <div class="col-1">
                     <p>So fucking cold</p>
                 </div>
             </div>
-            <p id="meaqua-applause">What about you, Takuya-kun? Please do your best to become happy for my sake. I am praying for your happiness from the bottom of my heart.</p id="meaqua-applause">
+            <p id="meaqua-applause">
+                {% if not user.is_authenticated or use_default_theme or theme.welcome_text == "" %}
+                Hello! Hope you have a great day!
+                {% else %}
+                {{ theme.welcome_text }}
+                {% endif %}
+            </p>
         </header>
         {% if user.is_authenticated %}
         {% if applications|length > 0 %}
@@ -191,6 +197,7 @@
 
 <script>
     let datetime = document.getElementById('meaqua-time');
+    let greetingText = document.getElementById('meaqua-greeting');
     let videoBackground = document.getElementById('video-background');
     let videoControl = document.getElementById('video-control');
     let videoMute = document.getElementById('video-mute');
@@ -201,6 +208,7 @@
 
     updateTime();
     updateVideoTime();
+    updateGreeting();
 
     function updateTime() {
         let date = new Date();
@@ -236,6 +244,28 @@
     videoBackground.addEventListener('timeupdate', function() {
         updateVideoTime();
     });
+
+    // Change greeting text based on time of day
+    function updateGreeting() {
+        let date = new Date();
+        let hour = date.getHours();
+        // Good morning ; 6-12
+        if (hour >= 6 && hour < 12) {
+            greetingText.innerHTML = 'Good morning';
+        }
+        // Good afternoon ; 12-18
+        else if (hour >= 12 && hour < 18) {
+            greetingText.innerHTML = 'Good afternoon';
+        }
+        // Good evening ; 18-21
+        else if (hour >= 18 && hour < 24) {
+            greetingText.innerHTML = 'Good evening';
+        }
+        // Good night ; 21-6
+        else if (hour >= 0 && hour < 6) {
+            greetingText.innerHTML = 'Good night';
+        }
+    }
 
     // video control button
     videoControl.addEventListener('click', function() {
