@@ -17,6 +17,7 @@ class Video(models.Model):
 class Theme(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
     background = models.ImageField(upload_to='backgrounds/', validators=[FileExtensionValidator(allowed_extensions=['png', 'gif', 'jpg', 'jpeg', 'bmp', 'svg', 'webp'])])
     color_primary = ColorField(default='#DFD9D6')
     color_accent = ColorField(default='#DBC2D1')
@@ -55,4 +56,4 @@ class Bookmark(models.Model):
     category = models.ForeignKey(BookmarkCategory, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name + '(' + self.category.name + ')' + ' by ' + self.user.username
+        return self.name + ' (' + self.category.name + ')' + ' by ' + self.user.username

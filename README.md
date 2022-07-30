@@ -2,7 +2,7 @@
  Startpage for your browser with built-in editors, full customization and built-in style sharing system.
 
 ## Origins
-This project take an idea from [Flame](https://github.com/pawelmalak/flame) that's a good start page for your browser but I need to add more 
+This project take an idea from [Flame](https://github.com/pawelmalak/flame) that's a good start page for your browser, but I need to add more 
 of my styling and some customization, so I forked and use my forked repository for half a year now. But I think that if we make 
 it better like add more customization ,some styling sharing system, more editor, and you don't need to hosted it yourself anymore.
 That's why this project has been created.
