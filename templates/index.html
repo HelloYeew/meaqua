@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+{#    TODO: favicon#}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.9.96/css/materialdesignicons.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
@@ -13,7 +14,7 @@
     <link rel="stylesheet" href="{% static 'css/material-icon.css' %}">
     <script src="{% static 'js/index.js' %}"></script>
     <meta charset="UTF-8">
-    <title>wang title</title>
+    <title>{{ theme.title }}</title>
 </head>
 
 <style>
@@ -45,6 +46,8 @@
 </style>
 
 <body>
+    {# If use has not set any video, remove video component from the page. #}
+    {% if use_default_theme or theme.video.video.url != none %}
     <video autoplay loop id="video-background">
         {% if not user.is_authenticated or use_default_theme or theme.video.video.url == none %}
         <source src="{% static 'video/video.mp4' %}" type="video/mp4">
@@ -52,6 +55,7 @@
         <source src="{{ theme.video.video.url }}" type="video/mp4">
         {% endif %}
     </video>
+    {% endif %}
 
     <div id="mask"></div>
 
@@ -123,12 +127,15 @@
 
     {#Right bottom button#}
     <div class="position-absolute bottom-0 end-0" style="margin-bottom: 10px; margin-right: 10px;">
+        {% if use_default_theme or theme.video.video.url != none %}
         <button type="button" id="video-control" class="btn btn-meaqua"><i class="mdi mdi-pause" aria-hidden="true" style="font-size: 24px"></i></button>
         <button type="button" id="video-mute" class="btn btn-meaqua"><i class="mdi mdi-volume-high" aria-hidden="true" style="font-size: 24px"></i></button>
+        {% endif %}
         <button type="button" id="settings" class="btn btn-meaqua" data-bs-toggle="modal" data-bs-target="#settings-modal"><i class="mdi mdi-cog" aria-hidden="true" style="font-size: 24px"></i></button>
     </div>
 
     {# Left bottom show what's playing #}
+    {% if use_default_theme or theme.video.video.url != none %}
     <div class="position-absolute bottom-0 start-0" style="margin-bottom: 10px; margin-left: 10px;">
         <div id="video-info">
             {% if not user.is_authenticated or use_default_theme or theme.video.name == none %}
@@ -139,6 +146,7 @@
             <p id="video-time"></p>
         </div>
     </div>
+    {% endif %}
 
     {# Modal #}
     <div class="modal fade" id="settings-modal" tabindex="-1" aria-labelledby="settings-header" aria-hidden="true">
@@ -200,21 +208,13 @@
     </div>
 </body>
 
-
-
 <script>
     let datetime = document.getElementById('meaqua-time');
     let greetingText = document.getElementById('meaqua-greeting');
-    let videoBackground = document.getElementById('video-background');
-    let videoControl = document.getElementById('video-control');
-    let videoMute = document.getElementById('video-mute');
-    let videoTime = document.getElementById('video-time');
-    let videoInfo = document.getElementById('video-info');
     const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
 
     updateTime();
-    updateVideoTime();
     updateGreeting();
 
     function updateTime() {
@@ -235,22 +235,6 @@
         }
         datetime.innerHTML = days[date.getDay()] + ', ' + date.getDate() + ' ' + months[date.getMonth()] + ' ' + date.getFullYear() + ' - ' + hour + ':' + minute + ':' + second;
     }
-
-    videoBackground.addEventListener('pause', function() {
-        document.getElementById('video-background').style.opacity = 0;
-        document.getElementById('video-background').style.backgroundColor = 'transparent';
-        videoInfo.style.display = 'none';
-    });
-
-    videoBackground.addEventListener('play', function() {
-        document.getElementById('video-background').style.opacity = 1;
-        document.getElementById('video-background').style.backgroundColor = '#000000';
-        videoInfo.style.display = 'block';
-    });
-
-    videoBackground.addEventListener('timeupdate', function() {
-        updateVideoTime();
-    });
 
     // Change greeting text based on time of day
     function updateGreeting() {
@@ -274,6 +258,15 @@
         }
     }
 
+    {% if use_default_theme or theme.video.video.url != none %}
+    let videoBackground = document.getElementById('video-background');
+    let videoControl = document.getElementById('video-control');
+    let videoMute = document.getElementById('video-mute');
+    let videoTime = document.getElementById('video-time');
+    let videoInfo = document.getElementById('video-info');
+
+    updateVideoTime();
+
     // video control button
     videoControl.addEventListener('click', function() {
         if (videoBackground.paused) {
@@ -294,6 +287,22 @@
             videoBackground.muted = true;
             videoMute.innerHTML = '<i class="mdi mdi-volume-off" aria-hidden="true" style="font-size: 24px"></i>';
         }
+    });
+
+    videoBackground.addEventListener('pause', function() {
+        document.getElementById('video-background').style.opacity = 0;
+        document.getElementById('video-background').style.backgroundColor = 'transparent';
+        videoInfo.style.display = 'none';
+    });
+
+    videoBackground.addEventListener('play', function() {
+        document.getElementById('video-background').style.opacity = 1;
+        document.getElementById('video-background').style.backgroundColor = '#000000';
+        videoInfo.style.display = 'block';
+    });
+
+    videoBackground.addEventListener('timeupdate', function() {
+        updateVideoTime();
     });
 
     function updateVideoTime() {
@@ -318,6 +327,7 @@
         }
         videoTime.innerHTML = minute + ':' + second + ' / ' + durationMinute + ':' + durationSecond;
     }
+    {% endif %}
 
     // Update time every second
     setInterval(function() {
