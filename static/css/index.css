@@ -82,6 +82,7 @@ a:hover {
     font-weight: 700;
     line-height: normal;
     margin-bottom: 2.5rem;
+    margin-top: -1rem;
 }
 
 .meaqua-section-headline {
@@ -89,6 +90,7 @@ a:hover {
     font-size: 20px;
     font-weight: 900;
     color: var(--color-primary);
+    margin-bottom: 16px;
 }
 
 .app-card {
