@@ -43,6 +43,14 @@
     #video-background {
         background-color: var(--color-background);
     }
+
+    #mask {
+        {% if not user.is_authenticated or use_default_theme %}
+        opacity: 0.5;
+        {% else %}
+        opacity: {{ theme.mask_opacity }};
+        {% endif %}
+    }
 </style>
 
 <body>

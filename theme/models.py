@@ -22,6 +22,7 @@ class Theme(models.Model):
     color_primary = ColorField(default='#DFD9D6')
     color_accent = ColorField(default='#DBC2D1')
     color_background = ColorField(default='#0A0A0A')
+    mask_opacity = models.FloatField(default=0.5, max_length=1)
     video = models.ForeignKey(Video, on_delete=models.SET_NULL, null=True, blank=True)
     welcome_text = models.CharField(max_length=255, blank=True)
 
