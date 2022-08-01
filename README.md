@@ -10,6 +10,10 @@ That's why this project has been created.
 I decide to name this project as `aqua` from my favorite Vtuber [Minato Aqua,](https://virtualyoutuber.fandom.com/wiki/Minato_Aqua)
 but I decide to name this project `meaqua` that's the fans name of the collaboration with [Kagura Mea](https://virtualyoutuber.fandom.com/wiki/Kagura_Mea).
 
+## Current Status
+This project is still in development, but it can be use for personal use now by control your styling in Django's admin theme. I will use this as backend and will rewrite frontend in 
+maybe Svelte or React.
+
 ## Set up the project
 _Coming soon_
 
