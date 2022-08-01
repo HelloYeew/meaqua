@@ -274,14 +274,11 @@
     let videoInfo = document.getElementById('video-info');
     let playFirstTime = false;
 
-    // the video will not play if user is not interacting with the page first, so we need to manually play it when the user interacts with the page
-    document.addEventListener('mouseclick', function() {
-        if (videoBackground.paused && !playFirstTime) {
-            videoBackground.play();
-            videoControl.innerHTML = '<i class="mdi mdi-pause" aria-hidden="true" style="font-size: 24px"></i>';
-            playFirstTime = true;
-        }
-    });
+    // the video will not play if user is not interacting with the page first,
+    // so we need to manually play it when the user interacts with the page first
+    setTimeout(function() {
+        videoBackground.play();
+    }, 2000);
     updateVideoTime();
 
     // video control button
