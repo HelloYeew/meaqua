@@ -13,15 +13,15 @@ def home(request):
             bookmark_category_name_list.append(bookmark_category.name)
         bookmark_list = Bookmark.objects.filter(user=request.user)
         # If theme is not set, use default theme
-        if theme_user_setting is None:
-            return render(request, 'index.html', {'use_default_theme': True})
-        else:
-            return render(request, 'index.html', {
-                'use_default_theme': False,
-                'theme': theme_user_setting.current_theme,
-                'applications': Application.objects.filter(user=request.user),
-                'bookmark_name_list': bookmark_category_name_list,
-                'bookmark_list': bookmark_list
-            })
+        use_default_theme = False
+        if theme_user_setting.current_theme is None:
+            use_default_theme = True
+        return render(request, 'index.html', {
+            'use_default_theme': use_default_theme,
+            'theme': theme_user_setting.current_theme,
+            'applications': Application.objects.filter(user=request.user),
+            'bookmark_name_list': bookmark_category_name_list,
+            'bookmark_list': bookmark_list
+        })
     else:
         return render(request, 'index.html', {'use_default_theme': True})

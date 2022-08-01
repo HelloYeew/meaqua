@@ -273,6 +273,10 @@
     let videoTime = document.getElementById('video-time');
     let videoInfo = document.getElementById('video-info');
 
+    // wait for 1 seconds before play
+    setTimeout(function() {
+        videoBackground.play();
+    }, 1000);
     updateVideoTime();
 
     // video control button
