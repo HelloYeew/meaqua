@@ -52,12 +52,12 @@
     <div id="background"></div>
     <div id="mask"></div>
 
-    <div class="container main-padding">
+    <div class="container" style="padding: 4rem 0!important;">
         <h1 style="padding: 10px">Theme gallery</h1>
         <div style="overflow:hidden">
             <div class="row gap-3">
                 {% for theme in theme_list %}
-                    <div class="col-md-3">
+                    <div class="col-4">
                         <div class="card" style="width: 95%">
                             <img src="{{ theme.background.url }}" class="card-img-top" alt="...">
                             <div class="card-body">
