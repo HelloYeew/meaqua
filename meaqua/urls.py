@@ -26,6 +26,7 @@ urlpatterns = [
     path('', theme_views.home, name='home'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', users_views.LogoutAndRedirect.as_view(), name='logout'),
+    path('gallery/', theme_views.theme_gallery, name='gallery')
 ]
 
 if settings.DEBUG:

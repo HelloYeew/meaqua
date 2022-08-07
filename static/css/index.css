@@ -1,5 +1,5 @@
 ::selection {
-    color: var(--color-background);
+    color: var(--color-primary);
     background: var(--color-accent);
 }
 
@@ -8,7 +8,7 @@
     font-size: 14px;
 }
 
-p {
+p, h1, h2, h3, h4, h5, h6 {
     color: var(--color-primary);
 }
 
@@ -45,7 +45,18 @@ a:hover {
     width: 100vw;
     height: 100vh;
     z-index: -1;
+    opacity: var(--mask-opacity);
     background: linear-gradient(0deg, var(--color-background), var(--color-background));
+}
+
+#background {
+    object-fit: cover;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -2;
 }
 
 .meaqua-search-bar {
@@ -204,4 +215,9 @@ a:hover {
 .form-select {
     background-color: var(--color-background);
     color: var(--color-primary);
+}
+
+.card {
+    background-color: var(--color-background);
+
 }
