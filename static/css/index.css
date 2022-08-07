@@ -196,3 +196,12 @@ a:hover {
     background-color: var(--color-accent);
     filter: brightness(85%);
 }
+
+.form-label {
+    color: var(--color-primary);
+}
+
+.form-select {
+    background-color: var(--color-background);
+    color: var(--color-primary);
+}

@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -172,9 +173,17 @@
                     {% endif %}
 
                     {% if not user.is_authenticated or use_default_theme %}
-                    <p>Theme : Default</p>
+                    <p>Current theme : Default</p>
                     {% else %}
-                    <p>Theme : {{ theme.name }}</p>
+                    <p>Current theme : {{ theme.name }}</p>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ settings | crispy }}
+                        <button class="btn btn-meaqua" type="submit">Submit</button>
+                    </form>
                     {% endif %}
                 </div>
                 <div class="modal-footer">
@@ -213,6 +222,19 @@
                 </div>
             </div>
         </div>
+
+        {% if messages %}
+        <div class="toast" id="messages" role="status" aria-live="polite" aria-atomic="true" style="transition: all .2s" data-bs-delay="3000">
+            <div class="toast-body">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+                <div class="mt-2 pt-2 border-top">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Close</button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
     </div>
 </body>
 
@@ -357,6 +379,10 @@
     new bootstrap.Toast(loggedInToast).show();
     {% else %}
     new bootstrap.Toast(notLoggedInToast).show();
+    {% endif %}
+
+    {% if messages %}
+    new bootstrap.Toast(document.getElementById('messages')).show();
     {% endif %}
 
 </script>
