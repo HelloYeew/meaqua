@@ -33,12 +33,6 @@
 
     body {
         height: 100vh;
-        {% if not user.is_authenticated or use_default_theme %}
-        background: url("{% static 'img/background.png' %}") top!important;
-        {% else %}
-        background: url("{{ theme.background.url }}") top!important;
-        {% endif %}
-        background-size: cover!important;
     }
 
     #video-background {
@@ -52,9 +46,20 @@
         opacity: {{ theme.mask_opacity }};
         {% endif %}
     }
+
+    #background {
+        {% if not user.is_authenticated or use_default_theme %}
+        background: url("{% static 'img/background.png' %}") top;
+        {% else %}
+        background: url("{{ theme.background.url }}") top;
+        {% endif %}
+        background-size: cover;
+    }
 </style>
 
 <body>
+    <div id="background"></div>
+
     {# If use has not set any video, remove video component from the page. #}
     {% if use_default_theme or theme.video.video.url != none %}
     <video autoplay loop id="video-background">
