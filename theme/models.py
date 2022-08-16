@@ -19,6 +19,7 @@ class Theme(models.Model):
     name = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     background = models.ImageField(upload_to='backgrounds/', validators=[FileExtensionValidator(allowed_extensions=['png', 'gif', 'jpg', 'jpeg', 'bmp', 'svg', 'webp'])])
+    favicon = models.ImageField(upload_to='favicon/', validators=[FileExtensionValidator(allowed_extensions=['png'])], blank=True)
     color_primary = ColorField(default='#DFD9D6')
     color_accent = ColorField(default='#DBC2D1')
     color_background = ColorField(default='#0A0A0A')
