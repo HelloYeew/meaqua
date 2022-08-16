@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'theme',
-    'users'
+    'users',
+    'control_panel'
 ]
 
 # For silence the warning from django-admin-interface

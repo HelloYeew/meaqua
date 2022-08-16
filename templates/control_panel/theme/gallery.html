@@ -1,0 +1,26 @@
+{% extends "control_panel/base.html" %}
+{% load static %}
+
+{% block title %}Theme Gallery{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 5rem;">
+    <h1 style="padding: 1rem">Theme gallery</h1>
+    <div style="overflow:hidden">
+        <div class="row">
+            {% for theme in theme_list %}
+                <div class="col-4">
+                    <div class="card" style="width: 95%">
+                        <img src="{{ theme.background.url }}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h4 class="card-title">{{ theme.name }}</h4>
+                            <p class="card-text">{{ theme.welcome_text }}</p>
+                            <span class="text-muted">by {{ theme.user.username }}</span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

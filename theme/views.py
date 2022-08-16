@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from users.models import HomeSettings
-from theme.models import Application, BookmarkCategory, Bookmark, Theme
+from theme.models import Application, BookmarkCategory, Bookmark
 from django.contrib import messages
 from users.forms import HomepageSettingsForm
 
@@ -37,25 +37,3 @@ def home(request):
         })
     else:
         return render(request, 'index.html', {'use_default_theme': True})
-
-
-def theme_gallery(request):
-    # If user logged in, get current_theme
-    if request.user.is_authenticated:
-        theme_user_setting = HomeSettings.objects.filter(user=request.user).first()
-        # If theme is not set, use default theme
-        if theme_user_setting.current_theme is None:
-            use_default_theme = True
-        else:
-            use_default_theme = False
-        return render(request, 'theme/gallery.html', {
-            'theme_list': Theme.objects.all(),
-            'current_theme': theme_user_setting.current_theme,
-            'use_default_theme': use_default_theme
-        })
-    else:
-        return render(request, 'theme/gallery.html', {
-            'theme_list': Theme.objects.all(),
-            'use_default_theme': True
-        })
-

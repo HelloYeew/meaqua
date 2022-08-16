@@ -219,5 +219,43 @@ a:hover {
 
 .card {
     background-color: var(--color-background);
+}
 
+.navbar {
+    background-color: var(--color-background);
+}
+
+.nav-item .nav-link {
+    color: var(--color-primary);
+    transition: all .3s;
+}
+
+.nav-item:hover .nav-link:hover {
+    color: var(--color-primary);
+    filter: brightness(85%);
+}
+
+.navbar-brand {
+    color: var(--color-primary);
+    transition: all .3s;
+    --bs-navbar-active-color: var(--color-primary);
+}
+
+.navbar-brand:hover {
+    color: var(--color-primary);
+    filter: brightness(85%);
+}
+
+.navbar-nav .nav-link.active, .navbar-nav .show>.nav-link {
+    color: var(--color-primary);
+}
+
+.dropdown-menu {
+    background-color: var(--color-background)!important;
+    transition: all .3s;
+    --bs-dropdown-link-active-bg: var(--color-background);
+}
+
+.dropdown-item {
+    color: var(--color-primary);
 }
