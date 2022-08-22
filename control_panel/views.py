@@ -9,7 +9,8 @@ from users.models import HomeSettings
 
 @login_required
 def control_panel_home(request):
-    return render(request, 'control_panel/home.html')
+    # TODO: If settings homepage complete, remove this line
+    return redirect('theme_gallery')
 
 
 def theme_gallery(request):
