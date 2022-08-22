@@ -197,7 +197,7 @@
                     {% if user.is_authenticated %}
                     <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
                     <a href="{% url 'theme_gallery' %}" class="btn btn-meaqua">Theme Gallery</a>
-                    <a href="#" class="btn btn-meaqua">Settings</a>
+                    <a href="{% url 'control_panel_home' %}" class="btn btn-meaqua">Settings</a>
                     {% else %}
                     <a href="{% url 'login' %}" class="btn btn-success">Login</a>
                     {% endif %}
