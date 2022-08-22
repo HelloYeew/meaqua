@@ -66,6 +66,7 @@
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Theme</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{% url 'theme_gallery' %}">Gallery</a></li>
+                            <li><a class="dropdown-item" href="{% url 'create_theme' %}">Create</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -85,5 +86,29 @@
     </nav>
 
     {% block content %}{% endblock %}
+
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        {% if messages %}
+        <div class="toast" id="messages" role="status" aria-live="polite" aria-atomic="true" style="transition: all .2s" data-bs-delay="3000">
+            <div class="toast-body">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+                <div class="mt-2 pt-2 border-top">
+                    <a href="{% url 'home' %}" class="btn btn-meaqua btn-sm">Go to homepage</a>
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="toast">Close</button>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
 </body>
+
+<script>
+    {% block scripts %}{% endblock %}
+
+    {% if messages %}
+    new bootstrap.Toast(document.getElementById('messages')).show();
+    {% endif %}
+</script>
 </html>

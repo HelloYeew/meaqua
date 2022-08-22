@@ -259,3 +259,13 @@ a:hover {
 .dropdown-item {
     color: var(--color-primary);
 }
+
+.form-control {
+    background-color: var(--color-background)!important;
+    color: var(--color-primary)!important;
+}
+
+small.text-muted {
+    color: var(--color-primary)!important;
+    filter: brightness(85%);
+}

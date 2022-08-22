@@ -1,6 +1,8 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
+from control_panel.forms import CreateNewThemeForm
 from theme.models import Theme
 from users.models import HomeSettings
 
@@ -12,6 +14,7 @@ def control_panel_home(request):
 
 def theme_gallery(request):
     # If user logged in, get current_theme
+    messages.success(request, 'Theme created successfully!')
     if request.user.is_authenticated:
         theme_user_setting = HomeSettings.objects.filter(user=request.user).first()
         # If theme is not set, use default theme
@@ -29,3 +32,30 @@ def theme_gallery(request):
             'theme_list': Theme.objects.all(),
             'use_default_theme': True
         })
+
+
+@login_required
+def create_theme(request):
+    theme_user_setting = HomeSettings.objects.filter(user=request.user).first()
+    # If theme is not set, use default theme
+    if theme_user_setting.current_theme is None:
+        use_default_theme = True
+    else:
+        use_default_theme = False
+    if request.method == 'POST':
+        create_form = CreateNewThemeForm(request.POST, request.FILES)
+        if create_form.is_valid():
+            create_form.instance.user = request.user
+            create_form.save()
+            # Set user's current_theme to this theme
+            theme_user_setting.current_theme = create_form.instance
+            theme_user_setting.save()
+            messages.success(request, 'Theme created successfully!')
+            return redirect('theme_gallery')
+    else:
+        create_form = CreateNewThemeForm()
+    return render(request, 'control_panel/theme/create.html', {
+        'create_form': create_form,
+        'current_theme': theme_user_setting.current_theme,
+        'use_default_theme': use_default_theme
+    })
