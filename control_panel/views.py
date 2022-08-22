@@ -14,7 +14,6 @@ def control_panel_home(request):
 
 def theme_gallery(request):
     # If user logged in, get current_theme
-    messages.success(request, 'Theme created successfully!')
     if request.user.is_authenticated:
         theme_user_setting = HomeSettings.objects.filter(user=request.user).first()
         # If theme is not set, use default theme
