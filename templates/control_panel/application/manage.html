@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container" style="padding: 5rem;">
     <h1 style="padding: 1rem">Manage Applications</h1>
-    <a href="#" class="btn btn-meaqua"><i class="mdi mdi-plus" aria-hidden="true" style="font-size: 20px"></i> Add applications</a>
+    <a href="{% url 'add_applications' %}" class="btn btn-meaqua"><i class="mdi mdi-plus" aria-hidden="true" style="font-size: 20px"></i> Add applications</a>
     <p></p>
     <div style="overflow:hidden">
         {% if applications|length > 0 %}

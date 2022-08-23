@@ -6,4 +6,5 @@ urlpatterns = [
     path('settings/theme/gallery', views.theme_gallery, name='theme_gallery'),
     path('settings/theme/create', views.create_theme, name='create_theme'),
     path('settings/applications/manage', views.manage_applications, name='manage_applications'),
+    path('settings/applications/add', views.add_applications, name='add_applications'),
 ]

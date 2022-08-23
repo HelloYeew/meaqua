@@ -1,8 +1,7 @@
-from colorfield.fields import ColorField
 from django import forms
 from django.core.validators import FileExtensionValidator
 
-from theme.models import Theme, Video
+from theme.models import Theme, Video, Application
 
 
 class CreateNewThemeForm(forms.ModelForm):
@@ -20,3 +19,14 @@ class CreateNewThemeForm(forms.ModelForm):
     class Meta:
         model = Theme
         fields = ['name', 'title', 'background', 'favicon', 'color_primary', 'color_accent', 'color_background', 'mask_opacity', 'video', 'welcome_text']
+
+
+class AddApplicationsForm(forms.ModelForm):
+    name = forms.CharField(label="Application name", help_text="An applications name", max_length=255)
+    description = forms.CharField(label="Description", help_text="A short explanation of this application. If this is blank, it will show the application's URL instead", max_length=255)
+    url = forms.URLField(label="URL", help_text="An applications URL", max_length=255)
+    icon_name = forms.CharField(label="Icon name", help_text="A material icon name from materialdesignicons.com", max_length=255)
+
+    class Meta:
+        model = Application
+        fields = ['name', 'description', 'url', 'icon_name']

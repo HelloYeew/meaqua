@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from control_panel.forms import CreateNewThemeForm
+from control_panel.forms import CreateNewThemeForm, AddApplicationsForm
 from theme.models import Theme, Application
 from users.models import HomeSettings
 
@@ -73,4 +73,28 @@ def manage_applications(request):
         'current_theme': theme_user_setting.current_theme,
         'use_default_theme': use_default_theme,
         'applications': Application.objects.filter(user=request.user)
+    })
+
+
+@login_required
+def add_applications(request):
+    theme_user_setting = HomeSettings.objects.filter(user=request.user).first()
+    # If theme is not set, use default theme
+    if theme_user_setting.current_theme is None:
+        use_default_theme = True
+    else:
+        use_default_theme = False
+    if request.method == 'POST':
+        add_form = AddApplicationsForm(request.POST)
+        if add_form.is_valid():
+            add_form.instance.user = request.user
+            add_form.save()
+            messages.success(request, 'Application added successfully!')
+            return redirect('manage_applications')
+    else:
+        add_form = AddApplicationsForm()
+    return render(request, 'control_panel/application/add.html', {
+        'add_form': add_form,
+        'current_theme': theme_user_setting.current_theme,
+        'use_default_theme': use_default_theme
     })
