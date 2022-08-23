@@ -101,19 +101,7 @@
         <div class="row">
             {% for application in applications %}
             <div class="col-3">
-                <a href="{{ application.url }}" target rel="noreferrer" class="app-card">
-                    <div class="app-card-icon"><i class="mdi mdi-{{ application.icon_name }}" aria-hidden="true" style="font-size: 24px; vertical-align: middle"></i></div>
-                    <div class="app-card-detail">
-                        <h5>{{ application.name }}</h5>
-                        <span>
-                            {% if application.description == "" or application.description == null %}
-                            {{ application.url }}
-                            {% else %}
-                            {{ application.description }}
-                            {% endif %}
-                        </span>
-                    </div>
-                </a>
+                {% include "snippets/applications.html" %}
             </div>
             {% endfor %}
         </div>

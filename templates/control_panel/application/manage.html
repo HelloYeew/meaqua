@@ -1,0 +1,26 @@
+{% extends "control_panel/base.html" %}
+
+{% block title %}Manage Applications{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 5rem;">
+    <h1 style="padding: 1rem">Manage Applications</h1>
+    <a href="#" class="btn btn-meaqua"><i class="mdi mdi-plus" aria-hidden="true" style="font-size: 20px"></i> Add applications</a>
+    <p></p>
+    <div style="overflow:hidden">
+        {% if applications|length > 0 %}
+        <div class="row">
+            {% for application in applications %}
+            <div class="col-3">
+                {% include "snippets/applications.html" %}
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+
+{% endblock %}
