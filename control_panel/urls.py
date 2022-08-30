@@ -7,4 +7,5 @@ urlpatterns = [
     path('settings/theme/create', views.create_theme, name='create_theme'),
     path('settings/applications/manage', views.manage_applications, name='manage_applications'),
     path('settings/applications/add', views.add_applications, name='add_applications'),
+    path('settings/bookmarks/manage', views.manage_bookmarks, name='manage_bookmarks'),
 ]

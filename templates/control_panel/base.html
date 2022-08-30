@@ -76,6 +76,12 @@
                             <li><a class="dropdown-item" href="{% url 'add_applications' %}">Add</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Bookmarks</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{% url 'manage_bookmarks' %}">Manage</a></li>
+                        </ul>
+                    </li>
                 </ul>
                 {% if user.is_authenticated %}
                 <ul class="navbar-nav ml-auto">

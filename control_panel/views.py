@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
 from control_panel.forms import CreateNewThemeForm, AddApplicationsForm
-from theme.models import Theme, Application
+from theme.models import Theme, Application, Bookmark, BookmarkCategory
 from users.models import HomeSettings
 
 
@@ -97,4 +97,25 @@ def add_applications(request):
         'add_form': add_form,
         'current_theme': theme_user_setting.current_theme,
         'use_default_theme': use_default_theme
+    })
+
+
+@login_required
+def manage_bookmarks(request):
+    theme_user_setting = HomeSettings.objects.filter(user=request.user).first()
+    # If theme is not set, use default theme
+    if theme_user_setting.current_theme is None:
+        use_default_theme = True
+    else:
+        use_default_theme = False
+    bookmark_category_list = BookmarkCategory.objects.filter(user=request.user)
+    bookmark_category_name_list = []
+    for bookmark_category in bookmark_category_list:
+        bookmark_category_name_list.append(bookmark_category.name)
+    bookmark_list = Bookmark.objects.filter(user=request.user)
+    return render(request, 'control_panel/bookmark/manage.html', {
+        'current_theme': theme_user_setting.current_theme,
+        'use_default_theme': use_default_theme,
+        'bookmark_name_list': bookmark_category_name_list,
+        'bookmark_list': bookmark_list,
     })

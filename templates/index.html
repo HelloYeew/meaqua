@@ -111,16 +111,7 @@
         <div class="row">
             {% for bookmark_category in bookmark_name_list %}
             <div class="col-3 bookmark-card">
-                <h3>{{ bookmark_category }}</h3>
-                <div class="bookmark-card-bookmark">
-                    {% for bookmark in bookmark_list %}
-                    {% if bookmark.category.name == bookmark_category %}
-                    <a href="{{ bookmark.url }}" target rel="noreferrer">
-                        <div class="bookmark-card-icon"><i class="mdi mdi-{{ bookmark.icon_name }}" aria-hidden="true" style="font-size: 20px"></i></div> {{ bookmark.name }}
-                    </a>
-                    {% endif %}
-                    {% endfor %}
-                </div>
+                {% include "snippets/bookmarks.html" %}
             </div>
             {% endfor %}
         </div>
