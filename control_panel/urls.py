@@ -8,4 +8,5 @@ urlpatterns = [
     path('settings/applications/manage', views.manage_applications, name='manage_applications'),
     path('settings/applications/add', views.add_applications, name='add_applications'),
     path('settings/bookmarks/manage', views.manage_bookmarks, name='manage_bookmarks'),
+    path('settings/bookmarks/add', views.add_bookmarks, name='add_bookmarks'),
 ]

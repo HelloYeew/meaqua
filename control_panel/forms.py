@@ -1,7 +1,9 @@
+from unicodedata import category
+
 from django import forms
 from django.core.validators import FileExtensionValidator
 
-from theme.models import Theme, Video, Application
+from theme.models import Theme, Video, Application, Bookmark, BookmarkCategory
 
 
 class CreateNewThemeForm(forms.ModelForm):
@@ -30,3 +32,14 @@ class AddApplicationsForm(forms.ModelForm):
     class Meta:
         model = Application
         fields = ['name', 'description', 'url', 'icon_name']
+
+
+class AddBookmarksForm(forms.ModelForm):
+    category = forms.ModelChoiceField(label="Category", help_text="A category of this bookmark", queryset=BookmarkCategory.objects.all(), empty_label='No category', blank=False)
+    name = forms.CharField(label="Bookmark name", help_text="A bookmark name", max_length=255)
+    url = forms.URLField(label="URL", help_text="A bookmark URL", max_length=255)
+    icon_name = forms.CharField(label="Icon name", help_text="A material icon name from materialdesignicons.com", max_length=255)
+
+    class Meta:
+        model = Bookmark
+        fields = ['category', 'name', 'url', 'icon_name']
