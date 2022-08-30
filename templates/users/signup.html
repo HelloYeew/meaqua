@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{% static 'css/material-icon.css' %}">
     <script src="{% static 'js/index.js' %}"></script>
     <meta charset="UTF-8">
-    <title>login</title>
+    <title>Sign Up</title>
 </head>
 <style>
     * {
@@ -55,13 +55,14 @@
                 {% endfor %}
               {% endif %}
         </div>
-        <h1 style="font-weight: 700">Login</h1>
+        <h1 style="font-weight: 700">Sign Up</h1>
+        <h4>Let's join the meaqua!</h4>
         <form method="POST">
             {% csrf_token %}
             {{ form | crispy }}
             <button class="btn btn-meaqua" type="submit">Submit</button>
         </form>
-        <small>Don't have an account? <a href="{% url 'signup' %}">Sign up!</a></small>
+        <small>Already have an account? <a href="{% url 'login' %}">Login</a></small>
     </main>
 </body>
 </html>
