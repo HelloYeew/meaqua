@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from users.models import HomeSettings
+from users.models import HomeSettings, WeatherSettings
 from theme.models import Application, BookmarkCategory, Bookmark
 from django.contrib import messages
 from users.forms import HomepageSettingsForm
@@ -33,7 +33,9 @@ def home(request):
             'applications': Application.objects.filter(user=request.user),
             'bookmark_name_list': bookmark_category_name_list,
             'bookmark_list': bookmark_list,
-            'settings': settings_form
+            'settings': settings_form,
+            # TODO: Self-rendered weather using JSON wttr.in/Bangkok?format=j1
+            'weather_setting': WeatherSettings.objects.filter(user=request.user).first()
         })
     else:
         return render(request, 'index.html', {'use_default_theme': True})

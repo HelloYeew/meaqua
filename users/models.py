@@ -9,3 +9,11 @@ class HomeSettings(models.Model):
 
     def __str__(self):
         return self.user.username + '\'s home settings'
+
+
+class WeatherSettings(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    city = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username + '\'s weather settings'
