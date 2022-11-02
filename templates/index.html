@@ -91,7 +91,7 @@
                     </p>
                 </div>
                 <div style="flex: 0 0 auto; width: 22%;">
-                    {% if user.is_authenticated and weather_setting.city == None %}
+                    {% if not user.is_authenticated or user.is_authenticated and weather_setting.city == "" %}
                     <a data-bs-toggle="modal" data-bs-target="#weather-modal"><img src="https://wttr.in/_tqp0.png" alt="Weather" id="meaqua-weather"></a>
                     {% else %}
                     <a data-bs-toggle="modal" data-bs-target="#weather-modal"><img src="https://wttr.in/{{ weather_setting.city }}_tqp0.png" alt="Weather" id="meaqua-weather"></a>
@@ -195,7 +195,7 @@
             <div class="modal-content" style="background-color: var(--color-background)">
                 <div class="modal-header">
                     <h5 class="modal-title" id="weather-header" style="color: var(--color-accent)">
-                        {% if user.is_authenticated and weather_setting.city == None %}
+                        {% if not user.is_authenticated or user.is_authenticated and weather_setting.city == "" %}
                         Weather at your location
                         {% else %}
                         Weather at {{ weather_setting.city }}

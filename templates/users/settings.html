@@ -1,0 +1,16 @@
+{% extends "control_panel/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 5rem;">
+    <h1 style="padding-top: 1rem; padding-bottom: 1rem;">Settings</h1>
+    <h2>Weather</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ weather_form | crispy }}
+        <button class="btn btn-meaqua" type="submit">Submit</button>
+    </form>
+</div>
+{% endblock %}

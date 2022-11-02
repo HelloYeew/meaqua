@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 from theme.models import Theme
-from .models import HomeSettings
+from .models import HomeSettings, WeatherSettings
 
 
 class HomepageSettingsForm(forms.ModelForm):
@@ -22,3 +22,11 @@ class UserCreationForms(UserCreationForm):
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2']
+
+
+class WeatherSettingsForm(forms.ModelForm):
+    city = forms.CharField(label='City', max_length=100, help_text='Name of your setting that the weather will be displayed, leave it blank if you want to use your current location', required=False)
+
+    class Meta:
+        model = WeatherSettings
+        fields = ['city']
