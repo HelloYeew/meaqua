@@ -326,6 +326,10 @@
         videoBackground.play();
     }, 3000);
     updateVideoTime();
+    {% else %}
+    // Hide video if auto play is disabled
+    document.getElementById('video-background').style.opacity = 0;
+    document.getElementById('video-background').style.backgroundColor = 'transparent';
     {% endif %}
 
     // video control button
