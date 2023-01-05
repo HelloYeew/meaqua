@@ -24,7 +24,7 @@ def home(request):
                 # add message to indicate theme change
                 messages.success(request, 'Settings updated successfully!')
         else:
-            settings_form = HomepageSettingsForm(initial={'current_theme': theme_user_setting.current_theme})
+            settings_form = HomepageSettingsForm(instance=theme_user_setting)
         # If theme is not set, use default theme
         if theme_user_setting.current_theme is None:
             use_default_theme = True
