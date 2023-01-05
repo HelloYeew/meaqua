@@ -1,0 +1,17 @@
+<a href="{{ application.url }}" target rel="noreferrer" class="app-card">
+    <div class="app-card-icon"><i class="mdi mdi-{{ application.icon_name }}" aria-hidden="true" style="font-size: 24px; vertical-align: middle"></i></div>
+    <div class="app-card-detail">
+        <h5>{{ application.name }}</h5>
+        <span>
+            {% if application.description == "" or application.description == null %}
+            {{ application.url }}
+            {% else %}
+            {{ application.description }}
+            {% endif %}
+        </span>
+        <a href="#" class="btn btn-danger btn-sm" role="button" aria-pressed="true">Delete</a>
+    </div>
+    <div class="app-card-delete">
+        <a href="#" class="btn btn-danger btn-sm" role="button" aria-pressed="true">Delete</a>
+    </div>
+</a>
