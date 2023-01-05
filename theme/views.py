@@ -19,9 +19,10 @@ def home(request):
             settings_form = HomepageSettingsForm(request.POST)
             if settings_form.is_valid():
                 theme_user_setting.current_theme = settings_form.cleaned_data['current_theme']
+                theme_user_setting.auto_play_video = settings_form.cleaned_data['auto_play_video']
                 theme_user_setting.save()
                 # add message to indicate theme change
-                messages.success(request, 'Theme changed successfully!')
+                messages.success(request, 'Settings updated successfully!')
         else:
             settings_form = HomepageSettingsForm(initial={'current_theme': theme_user_setting.current_theme})
         # If theme is not set, use default theme
@@ -30,6 +31,7 @@ def home(request):
         return render(request, 'index.html', {
             'use_default_theme': use_default_theme,
             'theme': theme_user_setting.current_theme,
+            'auto_play_video': theme_user_setting.auto_play_video,
             'applications': Application.objects.filter(user=request.user),
             'bookmark_name_list': bookmark_category_name_list,
             'bookmark_list': bookmark_list,

@@ -8,10 +8,11 @@ from .models import HomeSettings, WeatherSettings
 
 class HomepageSettingsForm(forms.ModelForm):
     current_theme = forms.ModelChoiceField(label='Theme', queryset=Theme.objects.all(), required=False, empty_label='Default')
+    auto_play_video = forms.BooleanField(label='Auto play video', help_text='Automatically play video when page is loaded', required=False)
 
     class Meta:
         model = HomeSettings
-        fields = ['current_theme']
+        fields = ['current_theme', 'auto_play_video']
 
     def __init__(self, *args, **kwargs):
         super(HomepageSettingsForm, self).__init__(*args, **kwargs)
