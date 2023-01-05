@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 
-from control_panel.forms import CreateNewThemeForm, AddApplicationsForm, AddBookmarksForm
+from control_panel.forms import CreateNewThemeForm, AddApplicationsForm, AddBookmarksForm, AddBookmarksCategoryForm
 from theme.models import Theme, Application, Bookmark, BookmarkCategory
 from users.models import HomeSettings
 
@@ -171,6 +171,30 @@ def add_bookmarks(request):
         add_form = AddBookmarksForm()
         add_form.fields['category'].queryset = BookmarkCategory.objects.filter(user=request.user)
     return render(request, 'control_panel/bookmark/add.html', {
+        'add_form': add_form,
+        'current_theme': theme_user_setting.current_theme,
+        'use_default_theme': use_default_theme
+    })
+
+
+@login_required
+def add_bookmarks_category(request):
+    theme_user_setting = HomeSettings.objects.filter(user=request.user).first()
+    # If theme is not set, use default theme
+    if theme_user_setting.current_theme is None:
+        use_default_theme = True
+    else:
+        use_default_theme = False
+    if request.method == 'POST':
+        add_form = AddBookmarksCategoryForm(request.POST)
+        if add_form.is_valid():
+            add_form.instance.user = request.user
+            add_form.save()
+            messages.success(request, 'Bookmarks category added successfully!')
+            return redirect('manage_bookmarks')
+    else:
+        add_form = AddBookmarksCategoryForm()
+    return render(request, 'control_panel/bookmark/add_category.html', {
         'add_form': add_form,
         'current_theme': theme_user_setting.current_theme,
         'use_default_theme': use_default_theme

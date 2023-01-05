@@ -43,3 +43,11 @@ class AddBookmarksForm(forms.ModelForm):
     class Meta:
         model = Bookmark
         fields = ['category', 'name', 'url', 'icon_name']
+
+
+class AddBookmarksCategoryForm(forms.ModelForm):
+    name = forms.CharField(label="Category name", help_text="A category name", max_length=255)
+
+    class Meta:
+        model = BookmarkCategory
+        fields = ['name']

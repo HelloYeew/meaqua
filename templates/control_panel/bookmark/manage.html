@@ -5,7 +5,8 @@
 {% block content %}
 <div class="container" style="padding: 5rem;">
     <h1 style="padding: 1rem">Manage Bookmarks</h1>
-    <a href="#" class="btn btn-meaqua"><i class="mdi mdi-plus" aria-hidden="true" style="font-size: 20px"></i> Add Bookmarks</a>
+    <a href="{% url 'add_bookmarks' %}" class="btn btn-meaqua"><i class="mdi mdi-plus" aria-hidden="true" style="font-size: 20px"></i> Add Bookmarks</a>
+    <a href="{% url 'add_bookmark_category' %}" class="btn btn-meaqua"><i class="mdi mdi-plus" aria-hidden="true" style="font-size: 20px"></i> Create new category</a>
     <p></p>
     <div style="overflow:hidden">
         <div class="row">

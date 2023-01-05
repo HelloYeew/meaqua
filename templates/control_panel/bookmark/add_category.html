@@ -1,0 +1,15 @@
+{% extends "control_panel/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create a new bookmarks category{% endblock %}
+
+{% block content %}
+    <div class="container" style="padding: 5rem;">
+        <h1 style="padding: 1rem">Create a new bookmarks category</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ add_form | crispy }}
+            <button class="btn btn-meaqua" type="submit">Submit</button>
+        </form>
+    </div>
+{% endblock %}
