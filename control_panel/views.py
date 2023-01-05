@@ -62,6 +62,36 @@ def create_theme(request):
 
 
 @login_required
+def edit_theme(request, theme_id):
+    theme_user_setting = HomeSettings.objects.filter(user=request.user).first()
+    theme = Theme.objects.get(id=theme_id)
+    # Redirect to a theme gallery if user is not the owner of this theme
+    if theme.user != request.user:
+        messages.error(request, 'You cannot edit the theme that is not created by you!')
+        return redirect('theme_gallery')
+    # If the theme is not set, use default theme
+    if theme_user_setting.current_theme is None:
+        use_default_theme = True
+    else:
+        use_default_theme = False
+    if request.method == 'POST':
+        edit_form = CreateNewThemeForm(request.POST, request.FILES, instance=Theme.objects.get(id=theme_id))
+        if edit_form.is_valid():
+            edit_form.instance.user = request.user
+            edit_form.save()
+            messages.success(request, 'Theme edited successfully!')
+            return redirect('theme_gallery')
+    else:
+        edit_form = CreateNewThemeForm(instance=theme)
+    return render(request, 'control_panel/theme/edit.html', {
+        'edit_form': edit_form,
+        'theme': theme,
+        'current_theme': theme_user_setting.current_theme,
+        'use_default_theme': use_default_theme
+    })
+
+
+@login_required
 def manage_applications(request):
     theme_user_setting = HomeSettings.objects.filter(user=request.user).first()
     # If theme is not set, use default theme
