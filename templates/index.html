@@ -333,6 +333,11 @@
     videoInfo.style.display = 'none';
     {% endif %}
 
+    {% if user.is_authenticated and mute_video %}
+    videoBackground.muted = true;
+    videoMute.innerHTML = '<i class="mdi mdi-volume-off" aria-hidden="true" style="font-size: 24px"></i>'
+    {% endif %}
+
     // video control button
     videoControl.addEventListener('click', function() {
         if (videoBackground.paused) {

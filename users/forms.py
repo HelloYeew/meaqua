@@ -9,6 +9,7 @@ from .models import HomeSettings, WeatherSettings
 class HomepageSettingsForm(forms.ModelForm):
     current_theme = forms.ModelChoiceField(label='Theme', queryset=Theme.objects.all(), required=False, empty_label='Default')
     auto_play_video = forms.BooleanField(label='Auto play video', help_text='Automatically play video when page is loaded', required=False)
+    mute_video = forms.BooleanField(label='Mute video', help_text='Mute video when page is loaded', required=False)
 
     class Meta:
         model = HomeSettings

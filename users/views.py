@@ -47,6 +47,7 @@ def settings(request):
             home_setting_object = HomeSettings.objects.get(user=request.user)
             home_setting_object.current_theme = home_setting.current_theme
             home_setting_object.auto_play_video = home_setting.auto_play_video
+            home_setting_object.mute_video = home_setting.mute_video
             home_setting_object.save()
             messages.success(request, 'Settings saved successfully!')
     else:

@@ -20,6 +20,7 @@ def home(request):
             if settings_form.is_valid():
                 theme_user_setting.current_theme = settings_form.cleaned_data['current_theme']
                 theme_user_setting.auto_play_video = settings_form.cleaned_data['auto_play_video']
+                theme_user_setting.mute_video = settings_form.cleaned_data['mute_video']
                 theme_user_setting.save()
                 # add message to indicate theme change
                 messages.success(request, 'Settings updated successfully!')
@@ -32,6 +33,7 @@ def home(request):
             'use_default_theme': use_default_theme,
             'theme': theme_user_setting.current_theme,
             'auto_play_video': theme_user_setting.auto_play_video,
+            'mute_video': theme_user_setting.mute_video,
             'applications': Application.objects.filter(user=request.user),
             'bookmark_name_list': bookmark_category_name_list,
             'bookmark_list': bookmark_list,
