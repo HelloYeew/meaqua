@@ -131,6 +131,48 @@ def add_applications(request):
 
 
 @login_required
+def edit_applications(request, application_id):
+    theme_user_setting = HomeSettings.objects.filter(user=request.user).first()
+    application = Application.objects.get(id=application_id)
+    # Redirect to a manage application page if user is not the owner of this theme
+    if application.user != request.user:
+        messages.error(request, 'You cannot edit the application that is not created by you!')
+        return redirect('manage_applications')
+    # If the theme is not set, use default theme
+    if theme_user_setting.current_theme is None:
+        use_default_theme = True
+    else:
+        use_default_theme = False
+    if request.method == 'POST':
+        edit_form = AddApplicationsForm(request.POST, instance=Application.objects.get(id=application_id))
+        if edit_form.is_valid():
+            edit_form.instance.user = request.user
+            edit_form.save()
+            messages.success(request, 'Application edited successfully!')
+            return redirect('manage_applications')
+    else:
+        edit_form = AddApplicationsForm(instance=application)
+    return render(request, 'control_panel/application/edit.html', {
+        'edit_form': edit_form,
+        'application': application,
+        'current_theme': theme_user_setting.current_theme,
+        'use_default_theme': use_default_theme
+    })
+
+
+@login_required
+def delete_applications(request, application_id):
+    application = Application.objects.get(id=application_id)
+    # Redirect to a manage application page if user is not the owner of this theme
+    if application.user != request.user:
+        messages.error(request, 'You cannot delete the application that is not created by you!')
+        return redirect('manage_applications')
+    application.delete()
+    messages.success(request, 'Application deleted successfully!')
+    return redirect('manage_applications')
+
+
+@login_required
 def manage_bookmarks(request):
     theme_user_setting = HomeSettings.objects.filter(user=request.user).first()
     # If theme is not set, use default theme

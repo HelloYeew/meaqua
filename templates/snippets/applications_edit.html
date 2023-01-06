@@ -1,4 +1,4 @@
-<a href="{{ application.url }}" target rel="noreferrer" class="app-card">
+<a href="{{ application.url }}" target rel="noreferrer" class="app-card app-card-edit">
     <div class="app-card-icon"><i class="mdi mdi-{{ application.icon_name }}" aria-hidden="true" style="font-size: 24px; vertical-align: middle"></i></div>
     <div class="app-card-detail">
         <h5>{{ application.name }}</h5>
@@ -9,9 +9,9 @@
             {{ application.description }}
             {% endif %}
         </span>
-        <a href="#" class="btn btn-danger btn-sm" role="button" aria-pressed="true">Delete</a>
     </div>
     <div class="app-card-delete">
-        <a href="#" class="btn btn-danger btn-sm" role="button" aria-pressed="true">Delete</a>
+        <a href="{% url 'edit_applications' application.id %}" class="btn btn-meaqua btn-sm">Edit</a>
+        <a href="{% url 'delete_applications' application.id %}" class="btn btn-danger btn-sm">Delete</a>
     </div>
 </a>
