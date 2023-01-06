@@ -191,6 +191,7 @@
                     <a href="{% url 'control_panel_home' %}" class="btn btn-meaqua">Settings</a>
                     {% else %}
                     <a href="{% url 'login' %}" class="btn btn-success">Login</a>
+                    <a href="{% url 'theme_gallery' %}" class="btn btn-meaqua">Theme Gallery</a>
                     {% endif %}
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </div>
@@ -217,7 +218,6 @@
                     {% else %}
                     <img src="https://wttr.in/{{ weather_setting.city }}.png" alt="weather" style="width:100%">
                     {% endif %}
-
                 </div>
             </div>
         </div>

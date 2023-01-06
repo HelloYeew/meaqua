@@ -1,0 +1,11 @@
+<div class="card" style="width: 95%">
+    <img src="{{ theme.background.url }}" class="card-img-top" alt="...">
+    <div class="card-body">
+        <h4 class="card-title">{{ theme.name }} {% if theme == current_theme %}<span class="badge bg-success">Current</span>{% endif %}</h4>
+        <p class="card-text">{{ theme.welcome_text }}</p>
+        <span class="text-muted">by {{ theme.user.username }}</span>
+        {% if theme.user == user %}
+            <a href="{% url 'edit_theme' theme.id %}" class="btn btn-meaqua btn-sm"><i class="mdi mdi-pencil" aria-hidden="true" style="font-size: 20px"></i> Edit</a>
+        {% endif %}
+    </div>
+</div>

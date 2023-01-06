@@ -24,6 +24,8 @@ def theme_gallery(request):
             use_default_theme = False
         return render(request, 'control_panel/theme/gallery.html', {
             'theme_list': Theme.objects.all(),
+            'own_theme': Theme.objects.filter(user=request.user),
+            'other_theme': Theme.objects.exclude(user=request.user),
             'current_theme': theme_user_setting.current_theme,
             'use_default_theme': use_default_theme
         })
