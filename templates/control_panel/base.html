@@ -15,22 +15,20 @@
 </head>
 
 <style>
-    * {
-        {% if not user.is_authenticated or use_default_theme %}
-        --color-primary: #dfd9d6 !important;
-        --color-accent: #dbc2d1;
-        --color-background:#0a0a0a;
-        --mask-opacity: 0.5;
-        {% else %}
-        --color-primary: {{ current_theme.color_primary }} !important;
-        --color-accent: {{ current_theme.color_accent }};
-        --color-background: {{ current_theme.color_background }};
-        --mask-opacity: {{ current_theme.mask_opacity }};
-        {% endif %}
-    }
-
     body {
         height: 100vh;
+
+        {% if not user.is_authenticated or use_default_theme %}
+            --color-primary: #dfd9d6;
+            --color-accent: #dbc2d1;
+            --color-background:#0a0a0a;
+            --mask-opacity: 0.5;
+        {% else %}
+            --color-primary: {{ current_theme.color_primary }};
+            --color-accent: {{ current_theme.color_accent }};
+            --color-background: {{ current_theme.color_background }};
+            --mask-opacity: {{ current_theme.mask_opacity }};
+        {% endif %}
     }
 
     #background {
@@ -118,9 +116,9 @@
     </div>
 </body>
 
-<script>
-    {% block scripts %}{% endblock %}
+{% block scripts %}{% endblock %}
 
+<script>
     {% if messages %}
     new bootstrap.Toast(document.getElementById('messages')).show();
     {% endif %}

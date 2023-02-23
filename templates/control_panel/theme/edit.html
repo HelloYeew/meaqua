@@ -13,3 +13,25 @@
         </form>
     </div>
 {% endblock %}
+
+{% block scripts %}
+<script>
+    let colorPrimaryPicker = document.getElementById('id_color_primary');
+    let colorAccentPicker = document.getElementById('id_color_accent');
+    let colorBackgroundPicker = document.getElementById('id_color_background');
+    let maskOpacityInput = document.getElementById('id_mask_opacity');
+
+    colorPrimaryPicker.addEventListener('change', function() {
+        document.body.style.setProperty('--color-primary', colorPrimaryPicker.value);
+    });
+    colorAccentPicker.addEventListener('change', function() {
+        document.body.style.setProperty('--color-accent', colorAccentPicker.value);
+    });
+    colorBackgroundPicker.addEventListener('change', function() {
+        document.body.style.setProperty('--color-background', colorBackgroundPicker.value);
+    });
+    maskOpacityInput.addEventListener('change', function() {
+        document.body.style.setProperty('--mask-opacity', maskOpacityInput.value);
+    });
+</script>
+{% endblock %}

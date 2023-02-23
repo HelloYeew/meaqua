@@ -20,7 +20,7 @@ class CreateNewThemeForm(forms.ModelForm):
 
     class Meta:
         model = Theme
-        fields = ['name', 'title', 'background', 'favicon', 'color_primary', 'color_accent', 'color_background', 'mask_opacity', 'video', 'welcome_text']
+        fields = ['name', 'title', 'welcome_text', 'background', 'favicon', 'color_primary', 'color_accent', 'color_background', 'mask_opacity', 'video']
 
 
 class AddApplicationsForm(forms.ModelForm):
