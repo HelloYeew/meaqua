@@ -10,6 +10,8 @@ class HomepageSettingsForm(forms.ModelForm):
     current_theme = forms.ModelChoiceField(label='Theme', queryset=Theme.objects.all(), required=False, empty_label='Default')
     auto_play_video = forms.BooleanField(label='Auto play video', help_text='Automatically play video when page is loaded', required=False)
     mute_video = forms.BooleanField(label='Mute video', help_text='Mute video when page is loaded', required=False)
+    video_volume = forms.FloatField(label='Video volume', help_text='Set video volume', required=False,
+                                    widget=forms.NumberInput(attrs={'type': 'range', 'min': '0', 'max': '1', 'step': '0.01'}))
 
     class Meta:
         model = HomeSettings

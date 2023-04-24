@@ -428,6 +428,13 @@
             window.location.href = 'https://www.google.com/search?q=' + searchBar.value;
         }
     });
+
+    // Volume slider (name : video_volume)
+    let volumeSlider = document.getElementById('id_video_volume');
+    videoBackground.volume = volumeSlider.value;
+    volumeSlider.addEventListener('input', function() {
+        videoBackground.volume = volumeSlider.value;
+    });
 </script>
 
 </html>
