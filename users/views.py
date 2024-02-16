@@ -1,11 +1,12 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-from .forms import UserCreationForms, WeatherSettingsForm, HomepageSettingsForm
+from asana_integration.apis import get_all_workspaces
+from .forms import UserCreationForms, WeatherSettingsForm, HomepageSettingsForm, SetAsanaAPIKeyForm
 from django.shortcuts import render, redirect
 from django.contrib.auth import views as auth_views
 
-from .models import WeatherSettings, HomeSettings
+from .models import WeatherSettings, HomeSettings, AsanaIntegration
 
 
 class LogoutAndRedirect(auth_views.LogoutView):
@@ -56,6 +57,55 @@ def settings(request):
     return render(request, 'users/settings.html', {
         'weather_form': weather_form,
         'home_form': home_form,
+        'current_theme': theme_user_setting.current_theme,
+        'use_default_theme': use_default_theme
+    })
+
+
+@login_required
+def settings_asana_integration(request):
+    theme_user_setting = HomeSettings.objects.filter(user=request.user).first()
+    # If theme is not set, use default theme
+    if theme_user_setting.current_theme is None:
+        use_default_theme = True
+    else:
+        use_default_theme = False
+    try:
+        asana_integration = AsanaIntegration.objects.get(user=request.user)
+    except AsanaIntegration.DoesNotExist:
+        asana_integration = AsanaIntegration.objects.create(user=request.user)
+    if asana_integration.api_key:
+        all_workspaces = get_all_workspaces(asana_integration.api_key)
+    else:
+        all_workspaces = None
+    return render(request, 'users/settings/asana_integration.html', {
+        'ready': True if asana_integration.api_key else False,
+        'current_theme': theme_user_setting.current_theme,
+        'use_default_theme': use_default_theme,
+        'all_workspaces': all_workspaces
+    })
+
+
+@login_required
+def settings_set_asana_api_key(request):
+    theme_user_setting = HomeSettings.objects.filter(user=request.user).first()
+    # If theme is not set, use default theme
+    if theme_user_setting.current_theme is None:
+        use_default_theme = True
+    else:
+        use_default_theme = False
+    if request.method == 'POST':
+        asana_form = SetAsanaAPIKeyForm(request.POST)
+        if asana_form.is_valid():
+            asana_integration = AsanaIntegration.objects.get(user=request.user)
+            asana_integration.api_key = asana_form.cleaned_data.get('api_key')
+            asana_integration.save()
+            messages.success(request, 'Asana API key saved successfully!')
+            return redirect('settings_asana_integration')
+    else:
+        asana_form = SetAsanaAPIKeyForm()
+    return render(request, 'users/settings/set_asana_api_key.html', {
+        'form': asana_form,
         'current_theme': theme_user_setting.current_theme,
         'use_default_theme': use_default_theme
     })

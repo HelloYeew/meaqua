@@ -30,6 +30,8 @@ urlpatterns = [
     path('signup/', users_views.signup, name='signup'),
     path('logout/', users_views.LogoutAndRedirect.as_view(), name='logout'),
     path('settings/', users_views.settings, name='settings'),
+    path('settings/asana_integration/', users_views.settings_asana_integration, name='settings_asana_integration'),
+    path('settings/asana_integration/set_key/', users_views.settings_set_asana_api_key, name='settings_set_asana_api_key'),
     path('', include('control_panel.urls')),
 ]
 

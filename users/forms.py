@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 
 from theme.models import Theme
-from .models import HomeSettings, WeatherSettings
+from .models import HomeSettings, WeatherSettings, AsanaIntegration
 
 
 class HomepageSettingsForm(forms.ModelForm):
@@ -34,3 +34,10 @@ class WeatherSettingsForm(forms.ModelForm):
     class Meta:
         model = WeatherSettings
         fields = ['city']
+
+
+class SetAsanaAPIKeyForm(forms.Form):
+    api_key = forms.CharField(label='API Key', max_length=100, help_text='Your Asana API key', required=False)
+
+    class Meta:
+        fields = ['api_key']

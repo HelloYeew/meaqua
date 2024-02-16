@@ -1,0 +1,15 @@
+{% extends "control_panel/base.html" %}
+{% load crispy_forms_tags %}
+
+{% block title %}Settings{% endblock %}
+
+{% block content %}
+    <div class="container" style="padding: 5rem;">
+        <h1 style="padding-top: 1rem; padding-bottom: 1rem;">Settings > Asana Integration > API Key</h1>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-meaqua">Save</button>
+        </form>
+    </div>
+{% endblock %}

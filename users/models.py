@@ -20,3 +20,11 @@ class WeatherSettings(models.Model):
 
     def __str__(self):
         return self.user.username + '\'s weather settings'
+
+
+class AsanaIntegration(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    api_key = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return self.user.username + '\'s Asana integration'

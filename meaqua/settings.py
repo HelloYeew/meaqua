@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'theme',
     'users',
-    'control_panel'
+    'control_panel',
+    'asana_integration'
 ]
 
 # For silence the warning from django-admin-interface

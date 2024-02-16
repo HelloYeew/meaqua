@@ -12,6 +12,9 @@
         {{ home_form|crispy }}
         <h2>Weather</h2>
         {{ weather_form | crispy }}
+        <h2>Asana Integration</h2>
+        <a href="{% url 'settings_asana_integration' %}" class="btn btn-meaqua"><i class="mdi mdi-open-in-new" aria-hidden="true" style="font-size: 16px;"></i> Go to Asana Integration Settings</a>
+        <p></p>
         <button class="btn btn-meaqua" type="submit">Submit</button>
     </form>
 </div>
