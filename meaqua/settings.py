@@ -167,3 +167,106 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 CSRF_COOKIE_SECURE = config('CSRF_COOKIE_SECURE', cast=bool, default=False)
 CSRF_TRUSTED_ORIGINS = config('CSRF_TRUSTED_ORIGINS', cast=Csv(), default='')
 CORS_ORIGIN_WHITELIST = config('CORS_ORIGIN_WHITELIST', cast=Csv(), default='')
+
+
+# Logging
+# https://docs.djangoproject.com/en/5.0/topics/logging/
+
+LOGS_FILE = 'logs/meaqua.log'
+LOGS_FILE_MAX_SIZE = 1024 * 1024 * 10  # 10 MB
+LOGS_FILE_MAX_BACKUPS = 20
+
+
+# Check if logs directory exists, if not create it
+if not os.path.exists('logs'):
+    os.makedirs('logs')
+
+# Create log file if doesn't exist
+if not os.path.exists(LOGS_FILE):
+    open(LOGS_FILE, 'w').close()
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
+    'formatters': {
+        'standard': {
+            'format': '[%(asctime)s] {%(name)s:%(lineno)s} [%(levelname)s] - %(message)s',
+            'datefmt': '%d-%m-%Y %H:%M:%S %z',
+        },
+        "django.server": {
+            "()": "django.utils.log.ServerFormatter",
+            "format": "[{server_time}] {message}",
+            "style": "{",
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard',
+        },
+        'production_log_file': {
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': LOGS_FILE,
+            'formatter': 'standard',
+            # Clean log after server restart if DEBUG is True
+            'mode': 'w' if DEBUG else 'a',
+        },
+        'debug_log_file': {
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': LOGS_FILE,
+            'maxBytes': LOGS_FILE_MAX_SIZE,
+            'backupCount': LOGS_FILE_MAX_BACKUPS,
+            'formatter': 'standard',
+            # Clean log after server restart if DEBUG is True
+            'mode': 'w' if DEBUG else 'a'
+        },
+        "django.server": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            "formatter": "django.server",
+        },
+        "mail_admins": {
+            "level": "ERROR",
+            "filters": ["require_debug_false"],
+            "class": "django.utils.log.AdminEmailHandler",
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console', 'debug_log_file'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'propagate': True
+        } if DEBUG else {
+            'handlers': ['console', 'production_log_file'],
+            'level': 'INFO' if not DEBUG else 'DEBUG',
+            'propagate': True
+        },
+        "django": {
+            "handlers": ["console", "mail_admins", 'debug_log_file'],
+            "level": "INFO",
+        } if DEBUG else {
+            "handlers": ["console", "mail_admins", 'production_log_file'],
+            "level": "INFO",
+        },
+        "django.server": {
+            "handlers": ["django.server", 'debug_log_file'],
+            "level": "INFO",
+            "propagate": False,
+        } if DEBUG else {
+            "handlers": ["django.server", 'production_log_file'],
+            "level": "INFO",
+            "propagate": False,
+        }
+    }
+}

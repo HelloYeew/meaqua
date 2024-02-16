@@ -11,6 +11,10 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
+from meaqua.info import log_settings
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'meaqua.settings')
 
 application = get_wsgi_application()
+
+log_settings()
