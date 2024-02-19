@@ -1,6 +1,6 @@
 Django~=4.1
 python-decouple~=3.8
-django-admin-interface~=0.24.2
+django-admin-interface~=0.28.5
 django-colorfield~=0.7.2
 django-crispy-forms~=2.0
 crispy-bootstrap5~=0.7
