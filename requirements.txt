@@ -3,6 +3,6 @@ python-decouple~=3.8
 django-admin-interface~=0.24.2
 django-colorfield~=0.7.2
 django-crispy-forms~=2.0
-crispy-bootstrap5~=0.7
+crispy-bootstrap5~=2024.2
 gunicorn~=20.1.0
 psycopg2-binary~=2.9.5
